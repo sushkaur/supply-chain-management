@@ -1,0 +1,58 @@
+<div class="login-container">
+    <div style="background-color: white; padding: 30px; opacity: 0.85;">
+      <h2 style="text-align: center;">Welcome to Supply Chain Management System</h2>
+      <h3 style="text-align: center;">SIGN IN</h3>
+  
+      <form style="padding: 3px;">
+        <!-- Email Input -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            placeholder="Enter your email"
+            [(ngModel)]="email"
+            name="email"
+            required
+          />
+        </mat-form-field>
+  
+        <!-- Password Input -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="Enter your password"
+            [(ngModel)]="password"
+            name="password"
+            required
+          />
+        </mat-form-field>
+  
+        <!-- Error Message -->
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  
+        <!-- Login and Register Buttons -->
+        <div style="display: flex; justify-content: space-between;">
+          <button
+            mat-raised-button
+            color="primary"
+            class="full-width"
+            style="margin-right: 10px;"
+            (click)="loginClicked()"
+          >
+            Sign In
+          </button>
+          <button
+            mat-raised-button
+            color="accent"
+            class="full-width"
+            (click)="registerClicked()"
+          >
+            Register Account
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

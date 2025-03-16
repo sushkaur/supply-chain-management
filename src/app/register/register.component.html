@@ -1,0 +1,41 @@
+<div class="register-container">
+    <form>
+        <h2>Register a New Account</h2>
+      <!-- Name -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="registrationData.name" name="name" required />
+      </mat-form-field>
+  
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="registrationData.email" name="email" required />
+      </mat-form-field>
+  
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="registrationData.password" name="password" required />
+      </mat-form-field>
+  
+  
+      <!-- Submit Button -->
+      <button style="width: 100%;" mat-raised-button color="primary" type="button" (click)="onRegister()" [disabled]="isLoading">
+        Register
+      </button>
+  
+      <!-- Back to Login Button -->
+      <div class="back-to-login">
+        <button style="width: 100%;"  mat-button color="accent" type="button" (click)="navigateToLogin()">Back to Login</button>
+      </div>
+    </form>
+  
+    <!-- Loading Spinner -->
+    <mat-progress-spinner
+      *ngIf="isLoading"
+      mode="indeterminate"
+      color="primary"
+      class="loading-spinner"
+    ></mat-progress-spinner>
+  </div>

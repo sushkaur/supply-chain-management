@@ -1,0 +1,30 @@
+<app-sidebar></app-sidebar>
+<div style="margin-left: 250px;" class="analytics-container">
+    <h2>Analytics Dashboard</h2>
+  
+    <mat-grid-list cols="2" rowHeight="400px" gutterSize="20px">
+      <!-- Sales Revenue Chart -->
+      <mat-grid-tile>
+        <mat-card class="analytics-card">
+          <mat-card-header>
+            <mat-card-title>Sales Revenue</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <canvas id="salesChart"></canvas>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+  
+      <!-- User Growth Chart -->
+      <mat-grid-tile>
+        <mat-card class="analytics-card">
+          <mat-card-header>
+            <mat-card-title>User Growth</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <canvas id="userGrowthChart"></canvas>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>

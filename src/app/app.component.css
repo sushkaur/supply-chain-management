@@ -1,0 +1,17 @@
+.app-layout {
+    display: flex;
+  }
+  
+  main {
+    flex: 1;
+    padding: 20px;
+    transition: margin-left 0.3s;
+  }
+  
+  main.full-width {
+    margin-left: 0; /* Full width when sidebar is hidden */
+  }
+  
+  main:not(.full-width) {
+    margin-left: 250px; /* Adjust margin for sidebar width */
+  }
