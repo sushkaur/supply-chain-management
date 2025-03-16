@@ -1,0 +1,45 @@
+/* Container with background image */
+.register-container {
+    background-image: url('../../assets/loginbg.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+  }
+  
+  /* Form container styling */
+  form {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Headline styling */
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Material form field full width */
+  .full-width {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  /* Centering the Back to Login button */
+  .back-to-login {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Loading spinner styling */
+  .loading-spinner {
+    display: block;
+    margin: 20px auto;
+  }

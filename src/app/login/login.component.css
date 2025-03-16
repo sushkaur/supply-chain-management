@@ -1,0 +1,28 @@
+.login-container {
+    background-image: url('../../assets/loginbg.jpg');
+    background-size: cover; /* Ensure the image covers the entire container */
+    background-repeat: no-repeat; /* Avoid repeating the image */
+    background-position: center; /* Center the image */
+    height: 100vh; /* Full viewport height */
+    display: flex; /* For centering content inside the container */
+    justify-content: center;
+    align-items: center;
+}
+  
+h2 {
+    margin-bottom: 20px;
+}
+  
+mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+  
+button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.main-content {
+    margin-left: 0px !important; /* No margin when sidebar is hidden */
+}

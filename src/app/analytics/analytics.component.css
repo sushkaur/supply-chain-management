@@ -1,0 +1,19 @@
+.analytics-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+  }
+  
+  mat-grid-list {
+    width: 100%;
+  }
+  
+  mat-card {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
