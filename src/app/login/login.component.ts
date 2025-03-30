@@ -1,38 +1,41 @@
-
-import { Component, EventEmitter, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-login',
-  standalone: false,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css'],
+  standalone: false,
 })
-
 export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-  @Output() loginSuccess = new EventEmitter<void>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   loginClicked(): void {
-    if (!this.email || !this.password) {
-      this.errorMessage = 'Please enter both email and password.';
-      return;
-    }
-
     const loginData = {
-      email: this.email,
+      username: this.email,
       password: this.password
     };
 
-    this.router.navigate(['/view-manage-stocks']);
+    this.http.post<any>('http://localhost:5050/api/auth/login', loginData).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        // Optionally store the role if needed:
+        localStorage.setItem('role', response.role);
+        this.router.navigate(['/view-manage-stocks']);
+      },
+      error: () => {
+        this.errorMessage = 'Invalid email or password';
+      }
+    });
   }
 
   registerClicked(): void {
-    // Navigate to the registration page
-    this.router.navigate(['/register']);
+    // Optional: route to register page if you create one
+    alert('Register functionality not implemented yet.');
   }
 }

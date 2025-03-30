@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { InventoryService } from '../services/inventory.service';
 
 interface InventoryItem {
-  id: number;
+  _id: string; // Real MongoDB ID
+  id: number;  // Just for display index
   name: string;
   category: string;
   supplier: string;
@@ -20,42 +22,57 @@ interface InventoryItem {
 })
 export class ViewManageStocksComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'category', 'supplier', 'quantity', 'price', 'lastUpdated', 'actions'];
-  dataSource: MatTableDataSource<InventoryItem>;
-
-  inventoryItems: InventoryItem[] = [
-    { id: 1, name: 'Laptop', category: 'Electronics', supplier: 'Tech Corp', quantity: 10, price: 1000, lastUpdated: '2025-03-10' },
-    { id: 2, name: 'Mouse', category: 'Accessories', supplier: 'Hardware Ltd', quantity: 50, price: 20, lastUpdated: '2025-03-12' },
-    { id: 3, name: 'Keyboard', category: 'Accessories', supplier: 'Hardware Ltd', quantity: 30, price: 50, lastUpdated: '2025-03-08' },
-    { id: 4, name: 'Monitor', category: 'Electronics', supplier: 'Tech World', quantity: 15, price: 200, lastUpdated: '2025-03-14' },
-    { id: 5, name: 'Printer', category: 'Office Equipment', supplier: 'Office Depot', quantity: 8, price: 150, lastUpdated: '2025-03-11' },
-    { id: 6, name: 'Desk Chair', category: 'Furniture', supplier: 'FurniCo', quantity: 25, price: 120, lastUpdated: '2025-03-09' },
-    { id: 7, name: 'External Hard Drive', category: 'Storage', supplier: 'DataTech', quantity: 40, price: 80, lastUpdated: '2025-03-13' },
-    { id: 8, name: 'Router', category: 'Networking', supplier: 'NetGear', quantity: 18, price: 90, lastUpdated: '2025-03-12' },
-    { id: 9, name: 'Graphics Card', category: 'Electronics', supplier: 'GPU Experts', quantity: 12, price: 500, lastUpdated: '2025-03-07' },
-    { id: 10, name: 'SSD 1TB', category: 'Storage', supplier: 'DataTech', quantity: 22, price: 150, lastUpdated: '2025-03-05' }
-  ];
+  dataSource = new MatTableDataSource<InventoryItem>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor() {
-    this.dataSource = new MatTableDataSource(this.inventoryItems);
-  }
+  constructor(private inventoryService: InventoryService) {}
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.inventoryItems);
+    this.loadInventoryFromBackend();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
+  loadInventoryFromBackend(): void {
+    this.inventoryService.getAllInventory().subscribe({
+      next: (items) => {
+        const formattedItems: InventoryItem[] = items.map((item: any, index: number) => ({
+          _id: item._id,
+          id: index + 1,
+          name: item.name,
+          category: item.category,
+          supplier: item.supplier,
+          quantity: item.quantity,
+          price: item.price,
+          lastUpdated: new Date(item.updatedAt).toLocaleDateString()
+        }));
+
+        this.dataSource = new MatTableDataSource(formattedItems);
+        this.dataSource.paginator = this.paginator;
+      },
+      error: (err) => {
+        console.error('Error fetching inventory:', err);
+      }
+    });
+  }
+
   editItem(item: InventoryItem): void {
     console.log('Editing item:', item);
     alert(`Editing item: ${item.name}`);
+    // To be replaced with modal or form later
   }
 
-  deleteItem(id: number): void {
-    this.inventoryItems = this.inventoryItems.filter(item => item.id !== id);
-    this.dataSource.data = this.inventoryItems;
+  deleteItem(mongoId: string): void {
+    if (confirm('Are you sure you want to delete this item?')) {
+      this.inventoryService.deleteItem(mongoId).subscribe({
+        next: () => this.loadInventoryFromBackend(),
+        error: (err) => {
+          console.error('Error deleting item:', err);
+        }
+      });
+    }
   }
 }
