@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+
 import { InventoryService } from '../services/inventory.service';
+import { EditStockDialogComponent } from '../edit-stock-dialog/edit-stock-dialog.component';
 
 interface InventoryItem {
-  _id: string; // Real MongoDB ID
-  id: number;  // Just for display index
+  _id: string; // MongoDB ID
+  id: number;  // Display ID
   name: string;
   category: string;
   supplier: string;
@@ -20,26 +23,30 @@ interface InventoryItem {
   styleUrls: ['./view-manage-stocks.component.css'],
   standalone: false
 })
-export class ViewManageStocksComponent implements OnInit, AfterViewInit {
+export class ViewManageStocksComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'category', 'supplier', 'quantity', 'price', 'lastUpdated', 'actions'];
   dataSource = new MatTableDataSource<InventoryItem>();
+  inventoryItems: InventoryItem[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private inventoryService: InventoryService) {}
+  constructor(
+    private inventoryService: InventoryService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadInventoryFromBackend();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
 
   loadInventoryFromBackend(): void {
     this.inventoryService.getAllInventory().subscribe({
       next: (items) => {
-        const formattedItems: InventoryItem[] = items.map((item: any, index: number) => ({
+        this.inventoryItems = items.map((item: any, index: number) => ({
           _id: item._id,
           id: index + 1,
           name: item.name,
@@ -50,7 +57,7 @@ export class ViewManageStocksComponent implements OnInit, AfterViewInit {
           lastUpdated: new Date(item.updatedAt).toLocaleDateString()
         }));
 
-        this.dataSource = new MatTableDataSource(formattedItems);
+        this.dataSource = new MatTableDataSource(this.inventoryItems);
         this.dataSource.paginator = this.paginator;
       },
       error: (err) => {
@@ -60,9 +67,23 @@ export class ViewManageStocksComponent implements OnInit, AfterViewInit {
   }
 
   editItem(item: InventoryItem): void {
-    console.log('Editing item:', item);
-    alert(`Editing item: ${item.name}`);
-    // To be replaced with modal or form later
+    const dialogRef = this.dialog.open(EditStockDialogComponent, {
+      width: '400px',
+      data: { ...item }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.inventoryItems.findIndex(i => i._id === result._id);
+        if (index !== -1) {
+          this.inventoryItems[index] = {
+            ...this.inventoryItems[index],
+            ...result
+          };
+          this.dataSource.data = [...this.inventoryItems];
+        }
+      }
+    });
   }
 
   deleteItem(mongoId: string): void {
