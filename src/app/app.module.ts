@@ -3,35 +3,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Angular Material modules
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-// import { SidebarComponent } from './sidebar/sidebar.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-import { MatSelectModule } from '@angular/material/select';
+// App components
+import { LoginComponent } from './login/login.component';
 import { ViewManageStocksComponent } from './view-manage-stocks/view-manage-stocks.component';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatTable } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
-import { MatPaginator } from '@angular/material/paginator';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AnalyticsComponent } from './analytics/analytics.component';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { AboutComponent } from './about/about.component';
+import { EditStockDialogComponent } from './edit-stock-dialog/edit-stock-dialog.component';
+
+// Angular Material Modules
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,8 @@ import { AboutComponent } from './about/about.component';
     AnalyticsComponent,
     LogoutComponent,
     RegisterComponent,
-    AboutComponent
+    AboutComponent,
+    EditStockDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,20 +52,20 @@ import { AboutComponent } from './about/about.component';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    // Angular Material Modules
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatToolbar,
-    MatTable,
-    MatIcon,
-    MatPaginator,
+    MatToolbarModule,
     MatTableModule,
+    MatIconModule,
     MatPaginatorModule,
     MatProgressBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

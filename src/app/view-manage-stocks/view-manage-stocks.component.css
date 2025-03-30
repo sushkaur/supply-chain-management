@@ -1,4 +1,4 @@
-.inventory-container {
+/* .inventory-container {
     width: 82%;
     margin: auto;
     text-align: center;
@@ -20,4 +20,77 @@
   
   button {
     margin: 5px;
+  } */
+
+
+  .inventory-container {
+    width: 82%;
+    margin: auto;
+    padding-top: 20px;
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .mat-elevation-z8 {
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  
+  /* Table headers */
+  th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* Table cells */
+  td, th {
+    padding: 12px;
+    text-align: center;
+    word-wrap: break-word;
+  }
+  
+  /* Button spacing */
+  button {
+    margin: 4px;
+    min-width: 64px;
+  }
+  
+  /* Align action buttons in a flex row if needed */
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* Optional: Responsive for small screens */
+  @media (max-width: 768px) {
+    .inventory-container {
+      width: 95%;
+      padding: 10px;
+    }
+  
+    table {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+  }
+
+  button[color="primary"] {
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  button[color="warn"] {
+    background-color: #d32f2f;
+    color: white;
   }
