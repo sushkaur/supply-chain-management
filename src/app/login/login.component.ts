@@ -13,7 +13,7 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private readonly http: HttpClient, private readonly router: Router) {}
 
   loginClicked(): void {
     const loginData = {
@@ -35,7 +35,6 @@ export class LoginComponent {
   }
 
   registerClicked(): void {
-    // Optional: route to register page if you create one
-    alert('Register functionality not implemented yet.');
+    this.router.navigate(['/register']);
   }
 }

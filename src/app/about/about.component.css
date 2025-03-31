@@ -1,0 +1,38 @@
+.about-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 24px;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+  }
+  
+  .about-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+  
+  .about-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  
+  .about-container ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .about-container ul li {
+    margin-bottom: 8px;
+  }
+  
+  .footer {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 20px;
+    text-align: right;
+  }

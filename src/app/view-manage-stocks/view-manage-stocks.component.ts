@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,17 +31,13 @@ export class ViewManageStocksComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private inventoryService: InventoryService,
-    private dialog: MatDialog
+    private readonly inventoryService: InventoryService,
+    private readonly dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.loadInventoryFromBackend();
   }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  // }
 
   loadInventoryFromBackend(): void {
     this.inventoryService.getAllInventory().subscribe({
