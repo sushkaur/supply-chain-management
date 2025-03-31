@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InventoryService {
-  private baseUrl = 'http://localhost:5050/api/inventory';
+  private readonly baseUrl = 'http://localhost:5050/api/inventory';
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   private getAuthHeaders() {
-    const token = localStorage.getItem('token') || '';
+    const token = localStorage.getItem('token') ?? '';
     return {
       headers: new HttpHeaders({
         Authorization: `Bearer ${token}`
@@ -31,7 +31,7 @@ export class InventoryService {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
 
-  deleteItem(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
+  deleteItem(id: string) {
+    return this.http.delete(`/api/inventory/${id}`);
   }
 }

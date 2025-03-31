@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -18,7 +18,7 @@ interface Order {
   styleUrls: ['./order-tracking.component.css'],
   standalone:false
 })
-export class OrderTrackingComponent implements OnInit, AfterViewInit {
+export class OrderTrackingComponent implements AfterViewInit {
   displayedColumns: string[] = ['orderId', 'customerName', 'product', 'quantity', 'status', 'progress', 'lastUpdated', 'actions'];
   dataSource: MatTableDataSource<Order>;
 
@@ -35,8 +35,6 @@ export class OrderTrackingComponent implements OnInit, AfterViewInit {
   constructor() {
     this.dataSource = new MatTableDataSource(this.orders);
   }
-
-  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

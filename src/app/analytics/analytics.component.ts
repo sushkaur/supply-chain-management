@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -9,25 +10,29 @@ Chart.register(...registerables);
   styleUrls: ['./analytics.component.css'],
   standalone: false
 })
-export class AnalyticsComponent implements OnInit, AfterViewInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AnalyticsComponent implements AfterViewInit {
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit(): void {
-    this.createSalesChart();
-    this.createUserGrowthChart();
+    this.http.get<any>('http://localhost:5050/api/analytics', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).subscribe((data) => {
+      this.createSalesChart(data.labels, data.salesRevenue);
+      this.createUserGrowthChart(data.labels, data.userGrowth);
+    });
   }
 
-  createSalesChart(): void {
+  createSalesChart(labels: string[], values: number[]): void {
     const ctx = document.getElementById('salesChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels,
         datasets: [{
           label: 'Sales Revenue (€)',
-          data: [12000, 15000, 18000, 22000, 26000, 30000],
+          data: values,
           backgroundColor: 'rgba(54, 162, 235, 0.5)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1
@@ -40,15 +45,15 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  createUserGrowthChart(): void {
+  createUserGrowthChart(labels: string[], values: number[]): void {
     const ctx = document.getElementById('userGrowthChart') as HTMLCanvasElement;
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels,
         datasets: [{
           label: 'User Growth',
-          data: [500, 700, 1200, 1800, 2500, 3200],
+          data: values,
           backgroundColor: 'rgba(255, 99, 132, 0.5)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 2,

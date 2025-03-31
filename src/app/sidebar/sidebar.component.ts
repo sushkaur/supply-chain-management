@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
 
   navigateTo(path: string): void {
     this.router.navigate([path]);
